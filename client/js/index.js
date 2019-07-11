@@ -16,6 +16,7 @@ $( document ).ready(function() {
       event.preventDefault()
       $('#register').show()
       $('#login').hide()
+      
     })
 
     $('#register-form').submit(function(event) {
@@ -41,6 +42,12 @@ $( document ).ready(function() {
       event.preventDefault()
       logout()
     })
+    $('#form-city').submit(function(event){
+      event.preventDefault()
+      fetchResto()
+    })
+
+
 });
 
 function register (newUser) {
@@ -140,11 +147,46 @@ function logout(){
 }
 
   function fetchResto(){
-    $('#listMenu').append(`
+    $('#list-resto').append(`
         <p>Please wait...</p>
     `)
+    let city= $('#input-city').val()
     $.ajax({
-      url: `${baseUrl}/resto/`,
+      url: `${baseUrl}/resto/city/${city}`,
       type: 'get'
     })
+    .done(data =>{
+      $('#list-resto').empty()
+      
+      let restaurants= data.restaurants
+      for (let i = 0; i < restaurants.length; i++) {
+        console.log(restaurants[i])
+        let data= restaurants[i].restaurant
+          $('#list-resto').append(`
+              <div class="row">
+              <div class="col s12 m7">
+                <div class="card">
+                  <div class="card-image">
+                    <img src="${data.thumb}">
+                    <span class="card-title">Card Title</span>
+                  </div>
+                  <div class="card-content">
+                    <h6>${data.name}</h6>
+                    <p>${data.location.locality}</p>
+                    <p>${data.timings}</p>
+                  </div>
+                  <div class="card-action">
+                    <a href="#">Detail</a>
+                  </div>
+                </div>
+              </div>
+            </div> 
+          `)
+      }
+    })
+    .fail(function(error){
+      console.log('kok error get data restaurants')
+      console.log(error)
+      
+      })
   }
