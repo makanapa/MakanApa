@@ -14,15 +14,16 @@
         <div class="nav-wrapper red accent-4">                    
             <a href="#" class="brand-logo" style="padding-left: 20px;">MakanApa<i class="material-icons">restaurant_menu</i></a>
             <ul id="nav-mobile" class="right hide-on-med-and-down">
-            <li><a id="to-login">Login</a></li>
-            <li><a id="to-register">register</a></li>            
+            <li><a id="to-logout">logout</a></li>
+            <li id="li-login"><a id="to-login">Login</a></li>
+            <li id="li-register"><a id="to-register">register</a></li>
             </ul>
         </div>
     </nav>
 
     <div id="register" style="margin: 0 auto; height: 60vh; width: 50vw; border-radius: 20px;; margin-top: 20px; box-shadow : 0 0 10px gray;">
-        <h4 style="padding-left: 20px; padding-top: 10px;;">Register</h4>
-            <form class="col s12" style="position: absolute; padding-left: 10%; margin-top: 15px;">
+            <form id="register-form" class="col s12" style="position: absolute; padding-left: 10%; margin-top: 15px;">
+                <h4 style="padding-bottom: 20px;">Register</h4>
                 <div class="input-field col s6" style="width : 30vw;">
                     <i class="material-icons prefix">account_circle</i>
                     <input id="name-reg" type="text" class="validate">
@@ -47,8 +48,8 @@
             </form>
     </div>
     <div id="login" style="margin: 0 auto; height: 60vh; width: 50vw; border-radius: 20px;; margin-top: 20px; box-shadow : 0 0 10px gray;">
-        <h4 style="padding-left: 20px; padding-top: 30px;;">Login</h4>
-            <form class="col s12" style="position: absolute; padding-left: 10%; margin-top: 15px;">
+            <form id="login-form" class="col s12" style="position: absolute; padding-left: 10%; margin-top: 15px;">
+                <h4 style="padding-bottom: 20px;">Login</h4>
                 <div class="input-field col s6" style="width : 30vw;">                    
                     <input id="email-log" type="email" class="validate">
                     <label for="email-log">Email</label>
