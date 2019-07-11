@@ -7,6 +7,7 @@ const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
 class userController{
 
     static register(req, res, next){
+        // console.log('aaaaaaa')
             let newUser= new User({
                 name: req.body.name,
                 email: req.body.email,
@@ -51,68 +52,68 @@ class userController{
         }
 
 
-         static loginGoogle(req, res, next){
-                client
-                .verifyIdToken({
-                    idToken: req.body.idToken,
-                    audience: process.env.GOOGLE_CLIENT_ID,
-                })
-        
-                .then(function(ticket){
-                    console.log(ticket)
-                    const { email, name } = ticket.getPayload()
-        
-                    let password= name+'makanapa?'
-                    let fullname= name.split(' ')
-                    console.log(fullname,'fullname')
-                    let newUser= new User({
-                        name: name,
-                        email: email,
-                        password: password
+    static loginGoogle(req, res, next){
+        client
+        .verifyIdToken({
+            idToken: req.body.idToken,
+            audience: process.env.GOOGLE_CLIENT_ID,
+        })
+
+        .then(function(ticket){
+            console.log(ticket)
+            const { email, name } = ticket.getPayload()
+
+            let password= name+'makanapa?'
+            let fullname= name.split(' ')
+            console.log(fullname,'fullname')
+            let newUser= new User({
+                name: name,
+                email: email,
+                password: password
+            })
+
+            User.findOne({email: email})
+            .then(user=>{
+                if(user){
+                    // console.log(user)
+                    let payload= {
+                        id: user._id,
+                        email: user.email,
+                        name: user.name
+                    }
+
+                    let token= generateToken(payload)
+
+                    res.status(200).json({
+                        token,
+                        userId: user._id,
+                        name: user.name
                     })
-        
-                    User.findOne({email: email})
+
+                }else{
+                    User.create(newUser)
                     .then(user=>{
-                        if(user){
-                            // console.log(user)
-                            let payload= {
-                                id: user._id,
-                                email: user.email,
-                                name: user.name
-                            }
-        
-                            let token= generateToken(payload)
-        
-                            res.status(200).json({
-                                token,
-                                userId: user._id,
-                                name: user.name
-                            })
-        
-                        }else{
-                            User.create(newUser)
-                            .then(user=>{
-                                let payload= {
-                                    id: user._id,
-                                    email: user.email,
-                                    name: user.name
-                                }
-            
-                                let token= generateToken(payload)
-            
-                                res.status(200).json({
-                                    token,
-                                    userId: user._id,
-                                    name: user.name
-                                })
-                            })
-                            .catch(next)  
+                        let payload= {
+                            id: user._id,
+                            email: user.email,
+                            name: user.name
                         }
+    
+                        let token= generateToken(payload)
+    
+                        res.status(200).json({
+                            token,
+                            userId: user._id,
+                            name: user.name
+                        })
                     })
-                    .catch(next)
-                })
-                .catch(next)
-            }
+                    .catch(next)  
+                }
+            })
+            .catch(next)
+        })
+        .catch(next)
+    }
 }
 
 module.exports= userController
