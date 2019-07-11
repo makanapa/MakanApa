@@ -2,7 +2,19 @@ const baseUrl= 'http://localhost:3000'
 
 $( document ).ready(function() {
     console.log( "ready!" );
+    $('#to-login').click(function(event) {
+      console.log('masukkkk')
+      event.preventDefault()
+      $('#login').show()
+      $('#register').hide()
+    })
 
+    $('#to-register').click(function(event) {
+      console.log('masukkkk')
+      event.preventDefault()
+      $('#register').show()
+      $('#login').hide()
+    })
 
 });
 
