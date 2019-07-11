@@ -29,3 +29,13 @@ function onSignIn(googleUser) {
   
      })
   }
+
+  function fetchResto(){
+    $('#listMenu').append(`
+        <p>Please wait...</p>
+    `)
+    $.ajax({
+      url: `${baseUrl}/resto/`,
+      type: 'get'
+    })
+  }
