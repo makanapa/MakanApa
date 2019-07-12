@@ -23,7 +23,7 @@ $( document ).ready(function() {
     })
 
     $('#register-form').submit(function(event) {
-      // event.preventDefault()
+      event.preventDefault()
       let newData = {
         name : $('#name-reg').val(),
         email : $('#email-reg').val(),
@@ -79,6 +79,7 @@ $( document ).ready(function() {
 });
 
 function register (newUser) {
+  console.log(newUser)
   $.ajax({
     url: `${baseUrl}/users/register`,
     type: 'post',
@@ -111,6 +112,7 @@ function login (loginOption) {
       console.log(Data)
       localStorage.setItem('token', Data.token)
       localStorage.setItem('name', Data.name)
+      hasToken()
     })
     .fail(function(error){
       console.log(error)
@@ -213,13 +215,13 @@ function fetchResto(){
       type: 'get'
     })
     .done(data =>{
-      $('#progressbar').hide()
-      $('#row-resto').empty()
+      $('#progressbar').hide()      
+      $('#list-resto').empty()
       
       let restaurants= data.restaurants
       let list = ""
       for (let i = 0; i < restaurants.length; i++) {
-        console.log(restaurants[i])
+        console.log(restaurants[i].restaurant.id)
         let data= restaurants[i].restaurant
         let image = data.thumb
         if(!data.thumb){
@@ -237,7 +239,7 @@ function fetchResto(){
                   <p style="font-size: 0.8em">${data.location.locality}</p>
                 </div>
                 <div class="card-action">
-                  <a href="#">Detail</a>
+                  <a href="" onclick="fetchDetails('${data.id}')">Detail</a>
                 </div>
               </div>
             </div>       
@@ -286,4 +288,87 @@ function fetchNutrition(input){
       console.log(error)
       
       })
+}
+
+function fetchDetails(id){
+    event.preventDefault()
+    console.log(`${baseUrl}/resto/${id}`)
+    $.ajax({
+      url: `${baseUrl}/resto/${id}`,
+      type: 'get',
+    })
+    .done((data) => {
+      console.log(data)
+      
+      $.ajax({
+        url: `https://www.googleapis.com/youtube/v3/search?part=id&q=review restaurant ${data.name}&type=video&key=AIzaSyCpRPmpzV8_iTPbBDUeg9jOWnjdyxj2Gao`,
+        type: 'get',
+      })
+      .done(youtube =>{
+        let videoId= youtube.items[0].id.videoId
+
+        console.log(location)
+      Swal.fire({
+        html:
+          `
+          <div class="row">
+            <div class="col s6">
+                <h5>Detail Information</h5>
+                <h6>${data.name}</h6>
+                <p>${data.location.address}</p>
+                <p>Rating: ${data.user_rating.aggregate_rating} <span>${data.user_rating.rating_text}</span></p> 
+                <p>Address: ${data.cuisines}</p>
+                <p>Timing: ${data.timings}</p>
+                <p>Average Cost for Two: ${data.currency} ${data.average_cost_for_two}</p>
+                <a href="${data.menu_url}">Link Menu</a>
+                
+                <div class="row">
+                <div class="col s12 m6">
+                  <div class="card blue-grey darken-1">
+                    <div class="card-content white-text">
+                      <span class="card-title">Review: </span>
+                      <p>${data.all_reviews.reviews[0].review.user.name}</p>
+                      <p>${data.all_reviews.reviews[0].review.review_text}</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+          
+            </div> 
+            <div class="col s6">
+                <h5>Review Video</h5>
+                <iframe width="420" height="245" src="https://www.youtube.com/embed/${videoId}" allowfullscreen="allowfullscreen"></iframe><br>
+                <a href="" onclick="initMap('${data.location.latitude}', '${data.location.longitude}')">Show Maps</a>
+                <div id="map"></div>
+            </div>   
+        </div>
+          `,
+        showCloseButton: true,
+        showCancelButton: false,
+        heightAuto: false,
+        width: 1500
+      })
+
+
+    })
+    .fail((jxHQR, error)=>{
+      console.log('error get youtube')
+      console.log(error)
+    })
+
+  })
+  .fail(error =>{
+    console.log('masuk error fetch detail')
+    console.log(error)
+    
+  })
+}
+
+function initMap(lat, long) {
+  event.preventDefault()
+  console.log(lat,  '=====')
+  console.log(long, '=====')
+  var location = {lat: Number(lat), lng: Number(long)};
+  var map = new google.maps.Map(document.getElementById('map'), {zoom: 17, center: location});
+  var marker = new google.maps.Marker({position: location, map: map});
 }
