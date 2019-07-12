@@ -165,6 +165,26 @@ function fetchResto(){
         <p>Please wait...</p>
     `)
     let city= $('#input-city').val()
+    
+    //====== Show Weather ======
+    $.ajax({
+      url: `${baseUrl}/weathers?location=${city}`,
+      type: 'get'
+    })
+    .done(data =>{
+      $('#weather').empty()
+      console.log('weather',data)
+      $('#weather').append(`
+        <p> Location: ${city} </p>
+        <p> Current Weather: ${data.weather[0].main}</p>
+        <p> Description : ${data.weather[0].description}</p>
+      `)
+    })
+    .fail(function(error){
+      console.log('error get data weather')
+    })
+
+
     $.ajax({
       url: `${baseUrl}/resto/city/${city}`,
       type: 'get'
