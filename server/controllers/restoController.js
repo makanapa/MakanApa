@@ -19,7 +19,7 @@ class restoController{
     static getDetail(req, res, next){
         axios({
             method: 'get',
-            url: `https://developers.zomato.com/api/v2.1/search?entity_id=${req.params.id}`,
+            url: `https://developers.zomato.com/api/v2.1/restaurant?res_id=${req.params.id}`,
             headers: {
               'user-key': 'f5f6d3f9422ef261b4fb097efee1973c'
             }
