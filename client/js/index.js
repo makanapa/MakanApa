@@ -4,7 +4,7 @@ $( document ).ready(function() {
     console.log( "ready!" );
     $('#progressbar').hide()
       isLogin()
-
+    
     $('#to-login').click(function(event) {
       $('#progressbar').show()
       console.log('masukkkk')
@@ -12,6 +12,8 @@ $( document ).ready(function() {
       $('#login').show()
       $('#register').hide()
       $('#progressbar').hide()
+      $('#list-resto').hide()
+      $('#weather').hide()
     })
 
     $('#to-register').click(function(event) {
@@ -19,6 +21,8 @@ $( document ).ready(function() {
       event.preventDefault()
       $('#register').show()
       $('#login').hide()
+      $('#list-resto').hide()
+      $('#weather').hide()
       
     })
 
@@ -30,6 +34,8 @@ $( document ).ready(function() {
         password : $('#password-reg').val()
       }
       register(newData)
+      $('#list-resto').hide()
+      $('#weather').hide()
     })
 
     $('#login-form').submit(function(event) {
@@ -40,11 +46,15 @@ $( document ).ready(function() {
       }
       console.log(userData)
       login(userData)
+      $('#list-resto').hide()
+      $('#weather').hide()
     })
 
     $('#to-logout').click(function(event) {
       event.preventDefault()
       logout()
+      $('#list-resto').hide()
+      $('#weather').hide()
     })
 
     $('#form-city').submit(function(event){
@@ -60,6 +70,8 @@ $( document ).ready(function() {
         nutrition: $('#input-nutrition').val()
       }
         fetchNutrition(data)
+        $('#list-resto').hide()
+        $('#weather').hide()
     })
 
     $('#to-search').click(function(event){
@@ -73,6 +85,8 @@ $( document ).ready(function() {
       hasToken()
       $('#search-city').hide()
       $('#check-nutrition').show()
+      $('#list-resto').hide()
+      $('#weather').hide()
     })
     $('.sidenav').sidenav();
     $('.slider').slider();
@@ -158,6 +172,7 @@ function hasToken(){
     $('#to-logout').show()
     $('#after-login').show()
     $('#sidenav-menu').show()
+    $('#slide-show').show()
 }
 
 function noToken(){
@@ -168,6 +183,8 @@ function noToken(){
   $('#to-logout').hide()
   $('#after-login').hide()
   $('#sidenav-menu').hide()
+  $('#list-resto').hide()
+  $('#slide-show').hide()
 }
 
 function logout(){
@@ -176,7 +193,7 @@ function logout(){
   auth2.signOut()
   .then(function(){
     console.log('User signed out')
-    noToken()
+    noToken()    
   })
   .catch(function(err){
     console.log(err)
@@ -266,7 +283,6 @@ function fetchNutrition(input){
       if(data.answer){
         Swal.fire({
           title: '<strong>Nutrition <u>Info</u></strong>',
-          type: 'info',
           html:
           `<img src="${data.image}" alt="Image Food"><br>` +
             `${data.answer}`,
@@ -301,7 +317,7 @@ function fetchDetails(id){
       console.log(data)
       
       $.ajax({
-        url: `https://www.googleapis.com/youtube/v3/search?part=id&q=review restaurant ${data.name}&type=video&key=AIzaSyCpRPmpzV8_iTPbBDUeg9jOWnjdyxj2Gao`,
+        url: `https://www.googleapis.com/youtube/v3/search?part=id&q=review ${data.name}&type=video&key=AIzaSyCpRPmpzV8_iTPbBDUeg9jOWnjdyxj2Gao`,
         type: 'get',
       })
       .done(youtube =>{
@@ -313,21 +329,23 @@ function fetchDetails(id){
           `
           <div class="row">
             <div class="col s6">
-                <h5>Detail Information</h5>
-                <h6>${data.name}</h6>
+                <h4 style="text-align : left !important">Detail Information</h4>
+                <div id="details" style="text-align : left; margin-top: 20px;">
+                <h5>${data.name}</h5>
                 <p>${data.location.address}</p>
                 <p>Rating: ${data.user_rating.aggregate_rating} <span>${data.user_rating.rating_text}</span></p> 
                 <p>Address: ${data.cuisines}</p>
                 <p>Timing: ${data.timings}</p>
                 <p>Average Cost for Two: ${data.currency} ${data.average_cost_for_two}</p>
-                <a href="${data.menu_url}">Link Menu</a>
+                <a class="waves-effect waves-light btn red accent-4" href="${data.menu_url}">Link Menu</a>
+                </div>
                 
                 <div class="row">
                 <div class="col s12 m6">
-                  <div class="card blue-grey darken-1">
-                    <div class="card-content white-text">
-                      <span class="card-title">Review: </span>
-                      <p>${data.all_reviews.reviews[0].review.user.name}</p>
+                  <div class="card red lighten-5" style="margin-top: 20px; width: 40vw; text-align: left;">
+                    <div class="card-content">
+                      <span class="card-title" style="font-weight : bold">Review: </span>
+                      <p style="font-weight : bold">${data.all_reviews.reviews[0].review.user.name}</p><br>
                       <p>${data.all_reviews.reviews[0].review.review_text}</p>
                     </div>
                   </div>
@@ -336,10 +354,12 @@ function fetchDetails(id){
           
             </div> 
             <div class="col s6">
-                <h5>Review Video</h5>
+                <h4>Review Video</h4>
+                <div class="video-div">
                 <iframe width="420" height="245" src="https://www.youtube.com/embed/${videoId}" allowfullscreen="allowfullscreen"></iframe><br>
-                <a href="" onclick="initMap('${data.location.latitude}', '${data.location.longitude}')">Show Maps</a>
+                <a class="waves-effect waves-light btn red accent-4" onclick="initMap('${data.location.latitude}', '${data.location.longitude}')" style="margin-top: 15px;">Show Maps</a>              
                 <div id="map"></div>
+                <div>
             </div>   
         </div>
           `,
