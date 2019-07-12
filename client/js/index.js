@@ -217,7 +217,7 @@ function fetchNutrition(input){
     })
     .done(data =>{
       console.log(data)
-      if(data.length>0){
+      if(data.answer){
         Swal.fire({
           title: '<strong>Nutrition <u>Info</u></strong>',
           type: 'info',
