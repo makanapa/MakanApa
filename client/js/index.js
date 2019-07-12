@@ -38,13 +38,25 @@ $( document ).ready(function() {
       console.log(userData)
       login(userData)
     })
+
     $('#to-logout').click(function(event) {
       event.preventDefault()
       logout()
     })
+
     $('#form-city').submit(function(event){
       event.preventDefault()
       fetchResto()
+    })
+
+    $('#form-nutrition').submit(function(event){
+      event.preventDefault()
+      console.log('masuk submit')
+      let data={
+        food: $('#input-food').val(),
+        nutrition: $('#input-nutrition').val()
+      }
+        fetchNutrition(data)
     })
 
 
@@ -148,10 +160,10 @@ function logout(){
   noToken()
 }
 
-  function fetchResto(){
-    // $('#list-resto').append(`
-    //     <p>Please wait...</p>
-    // `)
+function fetchResto(){
+    $('#list-resto').append(`
+        <p>Please wait...</p>
+    `)
     let city= $('#input-city').val()
     $.ajax({
       url: `${baseUrl}/resto/city/${city}`,
@@ -193,4 +205,41 @@ function logout(){
       console.log(error)
       
       })
-  }
+}
+
+function fetchNutrition(input){
+  console.log('masuk fetch');
+  
+  let {food, nutrition}= input
+    $.ajax({
+      url: `${baseUrl}/nutritions?food=${food}&nutrition=${nutrition}`,
+      type: 'get',
+    })
+    .done(data =>{
+      console.log(data)
+      if(data.length>0){
+        Swal.fire({
+          title: '<strong>Nutrition <u>Info</u></strong>',
+          type: 'info',
+          html:
+          `<img src="${data.image}" alt="Image Food"><br>` +
+            `${data.answer}`,
+          showCloseButton: true,
+          showCancelButton: false,
+          focusConfirm: false,
+        })
+      }else{
+        Swal.fire({
+          type: 'error',
+          title: 'Oops...',
+          text: 'Info Not Found!',
+        })
+      }
+      
+    })
+    .fail(function(error){
+      console.log('kok error get data nutrition')
+      console.log(error)
+      
+      })
+}

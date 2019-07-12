@@ -13,7 +13,8 @@ class NutritionController {
             }
         })
             .then(({data})=>{
-                res.send(data)
+                console.log('masuk nutrition', data)
+                res.status(200).json(data)
             })
             .catch(next)
     }
