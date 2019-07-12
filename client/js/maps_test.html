@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <style>
+        #map{
+            height: 300px;
+            width: 600px;
+        }
+    </style>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+
+    <input type="number" id="position-lat" placeholder="latitude" value="-6.2607697" step="0.0001">
+    <input type="number" id="position-lon" placeholder="longitude" value="106.7816131" step="0.0001">
+    <button id="search-location">Search</button>
+
+    <h3>Google Maps</h3>
+    <!--The div element for the map -->
+    <div id="map"></div>
+        
+</body>
+
+
+    
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+<script src="./maps.js"> </script> <!-- MUST BE DECLARED AFTER JQUERY AND BEFORE MAPS -->
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCpRPmpzV8_iTPbBDUeg9jOWnjdyxj2Gao&callback=initMap"></script> <!-- MAPS -->
+
+</html>
