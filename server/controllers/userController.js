@@ -25,7 +25,7 @@ class userController{
             console.log('masuk login')
             User.findOne({email: req.body.email})
             .then(user=>{
-                console.log(user)
+                console.log('ada usernya')
                 if(user){
                     if(compare(req.body.password, user.password)){
                         let payload= {
