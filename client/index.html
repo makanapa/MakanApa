@@ -6,15 +6,16 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta name="google-signin-client_id" content="917741793186-n77lqf774o53s6pra55m3u3khdu83mgr.apps.googleusercontent.com">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">    
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">    
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Oleo+Script&display=swap" rel="stylesheet">    
     <title>MakanApa</title>
 </head>
 <body>
     <nav>
         <div class="nav-wrapper red accent-4">                    
-            <a href="#" class="brand-logo" style="padding-left: 20px;">MakanApa<i class="material-icons">restaurant_menu</i></a>
+            <a href="#" class="brand-logo" style="padding-left: 20px; font-family: 'Oleo Script', cursive;">MakanApa<i class="material-icons">restaurant_menu</i></a>
             <ul id="nav-mobile" class="right hide-on-med-and-down">
-            <li><a id="to-logout">logout</a></li>
+            <li><a id="to-logout" style="font-size: 20px">Logout</a></li>
             <li id="li-login"><a id="to-login">Login</a></li>
             <li id="li-register"><a id="to-register">register</a></li>
             </ul>
@@ -58,7 +59,7 @@
                     <input id="password-log" type="password" class="validate">
                     <label for="password-log">Password</label>
                 </div>
-                <button class="btn waves-effect red accent-4" type="submit" name="action" style="float : right; margin-bottom: 10px; padding-left: 10px;">Submit
+                <button class="btn waves-effect waves-light red accent-4" type="submit" name="action" style="float : right; margin-bottom: 10px; padding-left: 10px;">Submit
                     <i class="material-icons" style="vertical-align: middle;">send</i>
                 </button>               
                 <div style="margin-bottom: 10px;">
@@ -67,18 +68,26 @@
                 </div>
             </form>
     </div>
-    <!-- Form Search City -->
-    <div id="search-city" class="row">
-        <div class="input-field col s12">
-            <form id="form-city">
-                <i class="material-icons prefix">search</i>
-                <input type="text" id="input-city" class="autocomplete">
-                <label for="autocomplete-input">City</label>
-            </form>
-        </div>
+    <!-- After Login Page -->
+    <div id="after-login">
+        <!-- Form Search City -->
+        <!-- <div id="search-city" class="row"> -->
+            <h5 style="text-align : center">Find restaurants in your city!</h5>
+            <div class="input-field col s6" style="width: 40vw; margin: auto;">
+                <form id="form-city">
+                    <div class="row">
+                        <i class="material-icons prefix">search</i>
+                        <input type="text" id="input-city" class="autocomplete">
+                        <label for="autocomplete-input">City</label>
+                        <button class="btn waves-effect waves-light red accent-4" type="submit" name="action" style="float : right;">search
+                                <i class="material-icons" style="vertical-align: middle;">search</i>
+                        </button>  
+                    </div>
+                </form>
+            </div>
     </div>
     <!-- Fetch Data Resto -->
-    <div id="list-resto"></div>
+    <div id="list-resto" class="row container"></div>
 
     <script src="https://apis.google.com/js/platform.js" async defer></script>
     <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>

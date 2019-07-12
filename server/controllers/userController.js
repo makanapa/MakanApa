@@ -64,8 +64,6 @@ class userController{
             const { email, name } = ticket.getPayload()
 
             let password= name+'makanapa?'
-            let fullname= name.split(' ')
-            console.log(fullname,'fullname')
             let newUser= new User({
                 name: name,
                 email: email,

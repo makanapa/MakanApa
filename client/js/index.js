@@ -122,6 +122,7 @@ function hasToken(){
     $('#register').hide()
     $('#login').hide()
     $('#to-logout').show()
+    $('#after-login').show()
 }
 
 function noToken(){
@@ -130,6 +131,7 @@ function noToken(){
   $('#register').hide()
   $('#login').show()
   $('#to-logout').hide()
+  $('#after-login').hide()
 }
 
 function logout(){
@@ -147,40 +149,42 @@ function logout(){
 }
 
   function fetchResto(){
-    $('#list-resto').append(`
-        <p>Please wait...</p>
-    `)
+    // $('#list-resto').append(`
+    //     <p>Please wait...</p>
+    // `)
     let city= $('#input-city').val()
     $.ajax({
       url: `${baseUrl}/resto/city/${city}`,
       type: 'get'
     })
     .done(data =>{
-      $('#list-resto').empty()
+      $('#row-resto').empty()
       
       let restaurants= data.restaurants
+      let list = ""
       for (let i = 0; i < restaurants.length; i++) {
         console.log(restaurants[i])
         let data= restaurants[i].restaurant
-          $('#list-resto').append(`
-              <div class="row">
-              <div class="col s12 m7">
-                <div class="card">
-                  <div class="card-image">
-                    <img src="${data.thumb}">
-                    <span class="card-title">Card Title</span>
-                  </div>
-                  <div class="card-content">
-                    <h6>${data.name}</h6>
-                    <p>${data.location.locality}</p>
-                    <p>${data.timings}</p>
-                  </div>
-                  <div class="card-action">
-                    <a href="#">Detail</a>
-                  </div>
+        let image = data.thumb
+        if(!data.thumb){
+          image = 'https://www.grouphealth.ca/wp-content/uploads/2018/05/placeholder-image-300x225.png'
+        }
+        $('#list-resto').append(`        
+            <div class="col s3" >            
+              <div class="card">
+                <div class="card-image">
+                  <img src="${image}">
+                  
+                </div>
+                <div class="card-content" style="height: 130px">
+                  <h6 style="font-size: 1em;">${data.name}</h6>
+                  <p style="font-size: 0.8em">${data.location.locality}</p>
+                </div>
+                <div class="card-action">
+                  <a href="#">Detail</a>
                 </div>
               </div>
-            </div> 
+            </div>       
           `)
       }
     })
