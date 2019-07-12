@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="google-signin-client_id" content="917741793186-n77lqf774o53s6pra55m3u3khdu83mgr.apps.googleusercontent.com">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">    
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Oleo+Script&display=swap" rel="stylesheet">    
+    <title>MakanApa</title>
+    <style>
+        #map{
+            width: 400px;
+            height: 250px;
+            margin: auto;
+            margin-top: 30px;
+            position: static;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- navbar  -->
+    <nav>
+        <div class="nav-wrapper red accent-4">          
+            <div style="margin-left: 10px;">
+                <a href="#" class="brand-logo" style="margin-left: 40px;  font-family: 'Oleo Script',cursive;">MakanApa<i class="material-icons">restaurant_menu</i></a>
+            </div>
+            <div id="sidenav-menu">
+                <a id="logo-makanApa" data-target="slide-out" class="sidenav-trigger show-on-large"><i class="material-icons" style="display: block !important;">menu</i></a>
+            </div>
+            <ul id="nav-mobile" class="right hide-on-med-and-down">
+                <li><a id="to-logout" style="font-size: 20px">Logout</a></li>
+                <li><a id="to-login">Login</a></li>
+                <li><a id="to-register">register</a></li>          
+            </ul>            
+        </div>
+    </nav>
+
+
+    <!-- sidenav -->   
+    <ul id="slide-out" class="sidenav">
+        <li><a id="to-search" class="waves-effect">Cari Restaurant di kotamu<i class="material-icons prefix">search</i></a></li>
+        <li><div class="divider"></div></li>
+        <li><a id="to-check-vit" class="waves-effect">Cek Nutrisi<i class="material-icons prefix"><i class="fas fa-bone"></i></i></a></li>
+    </ul>
+
+    <!-- slide show -->
+    <div id="slide-show" class="slider">
+        <ul class="slides">
+            <li>
+                <img src="https://www.wallpaperflare.com/static/284/272/1013/restaurant-cafe-appliances-tables-wallpaper.jpg" style="filter: blur(3px) brightness(0.48)"> <!-- random image -->
+                <div class="caption center-align text-lighten-2">
+                    <h3>Selamat datang di MakanApa</h3>
+                    <h5 class="light grey-text text-lighten-2">Temukan restoran favoritmu dari sini!</h5>
+                </div>
+            </li>
+            <li>
+                <img src="https://upload.wikimedia.org/wikipedia/commons/b/bb/Gourmet_meal_and_white_wine_%28Unsplash%29.jpg" style="filter : brightness(0.48)"> <!-- random image -->
+                <div class="caption left-align">
+                    <h4>Temukan Restoran Dengan Berbagai Menu</h4>
+                    <!-- <h5 class="light grey-text text-lighten-3"></h5> -->
+                </div>
+            </li>
+            <li>
+                <img src="https://cdn.shopify.com/s/files/1/0075/8251/5259/articles/banting-diet_2048x.jpg?v=1533552664" style="filter : brightness(0.48)"> <!-- random image -->
+                <div class="caption right-align">
+                    <h3>Temukan Menu Diet Kamu Disini</h3>
+                    <h6 class="light grey-text text-lighten-3">Bagi kamu yang sedang menjalani Diet, gunakan fitur Cek Nutrisi, untuk menemukan menu makanan yang sesuai dengan kebutuhan dietmu!</h6>
+                </div>
+            </li>
+        </ul>
+    </div>
+
+    <!-- register form -->
+    <div id="register" style="margin: 0 auto; height: 60vh; width: 50vw; border-radius: 20px;; margin-top: 20px; box-shadow : 0 0 10px gray;">
+            <form id="register-form" class="col s12" style="position: absolute; padding-left: 10%; margin-top: 15px;">
+                <h4 style="padding-bottom: 20px;">Register</h4>
+                <div class="input-field col s6" style="width : 30vw;">
+                    <i class="material-icons prefix">account_circle</i>
+                    <input id="name-reg" type="text" class="validate">
+                    <label for="name-reg">Name</label>
+                </div>
+                <div class="input-field col s6" style="width : 30vw;">
+                    <i class="material-icons prefix">email</i>
+                    <input id="email-reg" type="email" class="validate">
+                    <label for="email-reg">Email</label>
+                </div>              
+                <div class="input-field col s12" style="width : 30vw;">
+                    <input id="password-reg" type="password" class="validate">
+                    <label for="password-reg">Password</label>
+                </div>
+                <button class="btn waves-effect red accent-4" type="submit" name="action" style="float : right; margin-bottom: 10px; padding-left: 10px;">Submit
+                    <i class="material-icons" style="vertical-align: middle;">send</i>
+                </button>               
+                <div style="margin-bottom: 10px;">
+                    <label>Sign Up with google</label>
+                    <div class="g-signin2" data-onsuccess="onSignIn"></div>                                
+                </div>
+            </form>
+    </div>
+
+
+    <!-- login form -->
+    <div id="login" style="margin: 0 auto; height: 60vh; width: 50vw; border-radius: 20px;; margin-top: 20px; box-shadow : 0 0 10px gray;">
+            <form id="login-form" class="col s12" style="position: absolute; padding-left: 10%; margin-top: 15px;">
+                <h4 style="padding-bottom: 20px;">Login</h4>
+                <div class="input-field col s6" style="width : 30vw;">                    
+                    <input id="email-log" type="email" class="validate">
+                    <label for="email-log">Email</label>
+                </div>              
+                <div class="input-field col s12" style="width : 30vw;">
+                    <input id="password-log" type="password" class="validate">
+                    <label for="password-log">Password</label>
+                </div>
+                <button class="btn waves-effect waves-light red accent-4" type="submit" name="action" style="float : right; margin-bottom: 10px; padding-left: 10px;">Submit
+                    <i class="material-icons" style="vertical-align: middle;">send</i>
+                </button>               
+                <div style="margin-bottom: 10px;">
+                    <label>Sign In with google</label>
+                    <div class="g-signin2" data-onsuccess="onSignIn"></div>                                
+                </div>
+            </form>
+    </div>
+
+    <!-- progressbar -->
+    <div id="progressbar" class="progress red lighten-4" style="position: relative;">
+        <div class="indeterminate red darken-1"></div>
+    </div>
+
+    <!-- After Login Page -->
+    <div id="after-login">
+    
+    <!-- Form Search Hompage -->
+        <div id="check-nutrition" class="col s6" style="margin-left: 25%; width: 50vw; height: 30vh;">
+            <form id="form-nutrition">
+                <div class="input-field row">
+                    <i class="material-icons prefix"><i class="fas fa-utensils"></i></i>
+                    <input type="text" id="input-food" class="autocomplete">
+                    <label for="autocomplete-input">Makan Apa?</label>
+                </div>
+                <div class="input-field row">
+                    <i class="material-icons prefix"><i class="fas fa-bone"></i></i>
+                    <input type="text" id="input-nutrition" class="autocomplete" placeholder="Ex: Calcium">
+                    <label for="autocomplete-input">Kandungan Nutrisinya?</label>
+                </div>
+                <button class="btn waves-effect red accent-4" id="btn-nutrition" type="submit" name="action" style="float : right; margin-bottom: 10px; padding-left: 10px;">Calculate
+                    <i class="material-icons" style="vertical-align: middle;">send</i>
+                </button>   
+            </form>
+        </div> 
+        <div id="search-city" class="input-field col s6" style="width: 40vw; margin: auto; margin-top: 100px;">
+            <h5 style="text-align : center">Temukan Restoran di kotamu!</h5>
+            <form id="form-city">
+                <div class="row">
+                    <i class="material-icons prefix">search</i>
+                    <input type="text" id="input-city" class="autocomplete">
+                    <label for="autocomplete-input">City</label>
+                    <button class="btn waves-effect waves-light red accent-4" type="submit" name="action" style="float : right;">search
+                            <i class="material-icons" style="vertical-align: middle;">search</i>
+                    </button>  
+                </div>
+            </form>
+        </div>
+    </div>
+    <!-- Fetch Data Wheather -->
+    <div id="weather" class="row container"></div>
+
+    <!-- Fetch Data Resto -->
+    <div id="list-resto" class="row container"></div>
+
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCpRPmpzV8_iTPbBDUeg9jOWnjdyxj2Gao&callback=initMap"></script> <!-- MAPS -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+    <script src="./js/index.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+</body>
+</html>
