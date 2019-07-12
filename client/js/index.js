@@ -2,13 +2,16 @@ const baseUrl= 'http://localhost:3000'
 
 $( document ).ready(function() {
     console.log( "ready!" );
+    $('#progressbar').hide()
       isLogin()
 
     $('#to-login').click(function(event) {
+      $('#progressbar').show()
       console.log('masukkkk')
       event.preventDefault()
       $('#login').show()
       $('#register').hide()
+      $('#progressbar').hide()
     })
 
     $('#to-register').click(function(event) {
@@ -59,7 +62,20 @@ $( document ).ready(function() {
         fetchNutrition(data)
     })
 
-
+    $('#to-search').click(function(event){
+      event.preventDefault()
+      hasToken()
+      $('#search-city').show()
+      $('#check-nutrition').hide()
+    })
+    $('#to-check-vit').click(function(event){
+      event.preventDefault()
+      hasToken()
+      $('#search-city').hide()
+      $('#check-nutrition').show()
+    })
+    $('.sidenav').sidenav();
+    $('.slider').slider();
 });
 
 function register (newUser) {
@@ -83,6 +99,7 @@ function register (newUser) {
 }
 
 function login (loginOption) {
+  $('#progressbar').show()
   $.ajax({
     url: `${baseUrl}/users/login`,
     type: 'post',
@@ -90,6 +107,7 @@ function login (loginOption) {
     data: loginOption
   })
     .done(function(Data){
+      $('#progressbar').hide()
       console.log(Data)
       localStorage.setItem('token', Data.token)
       localStorage.setItem('name', Data.name)
@@ -100,6 +118,7 @@ function login (loginOption) {
 }
 
 function onSignIn(googleUser) {
+  $('#progressbar').show()
   console.log('masuk google sign in')
     const idToken= googleUser.getAuthResponse().id_token
      $.ajax({
@@ -109,6 +128,7 @@ function onSignIn(googleUser) {
         data:{idToken}
      })
      .done(function(Data){
+      $('#progressbar').hide()
        console.log(Data)
        localStorage.setItem('token', Data.token)
        localStorage.setItem('name', Data.name)
@@ -135,6 +155,7 @@ function hasToken(){
     $('#login').hide()
     $('#to-logout').show()
     $('#after-login').show()
+    $('#sidenav-menu').show()
 }
 
 function noToken(){
@@ -144,6 +165,7 @@ function noToken(){
   $('#login').show()
   $('#to-logout').hide()
   $('#after-login').hide()
+  $('#sidenav-menu').hide()
 }
 
 function logout(){
@@ -161,15 +183,17 @@ function logout(){
 }
 
 function fetchResto(){
-    $('#list-resto').append(`
-        <p>Please wait...</p>
-    `)
+    // $('#list-resto').append(`
+    //     <p>Please wait...</p>
+    // `)
+    $('#progressbar').show()
     let city= $('#input-city').val()
     $.ajax({
       url: `${baseUrl}/resto/city/${city}`,
       type: 'get'
     })
     .done(data =>{
+      $('#progressbar').hide()
       $('#row-resto').empty()
       
       let restaurants= data.restaurants
@@ -185,10 +209,10 @@ function fetchResto(){
             <div class="col s3" >            
               <div class="card">
                 <div class="card-image">
-                  <img src="${image}">
+                  <img src="${image}" style="height : 150px;">
                   
                 </div>
-                <div class="card-content" style="height: 130px">
+                <div class="card-content" style="height: 130px;">
                   <h6 style="font-size: 1em;">${data.name}</h6>
                   <p style="font-size: 0.8em">${data.location.locality}</p>
                 </div>
